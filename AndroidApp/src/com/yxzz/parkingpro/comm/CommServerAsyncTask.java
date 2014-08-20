@@ -29,7 +29,7 @@ public class CommServerAsyncTask extends AsyncTask<String, Integer, Boolean>
 	public final static String PAYQR = "PAYQR";
 	public final static String ADDCARD = "ADDCARD";
 	
-	public final static String SERVERURL = "http://honeyproject1.fulton.asu.edu/mpayment/interface/sendmpp.php";
+	public final static String SERVERURL = "URL/interface/portal.php";
 	//public final static String SERVERURL = "http://10.211.22.11/mpayment/interface/sendmpp.php";
 	
 	private String previousactivity_;
@@ -92,7 +92,7 @@ public class CommServerAsyncTask extends AsyncTask<String, Integer, Boolean>
 			networkerrdialogbuilder_ = new AlertDialog.Builder(mainactivity_);
 			networkerrdialogbuilder_
 					.setMessage(
-							"Network Error. Can not connect to GFS mPayment Gateway. Please try later.")
+							" .")
 					.setCancelable(false)
 					.setPositiveButton("OK",
 							new DialogInterface.OnClickListener() {
