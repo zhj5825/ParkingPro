@@ -1,3 +1,7 @@
+/*
+ * V1 for ParkingPro
+ **/
+
 package com.yxzz.parkingpro.activities;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
