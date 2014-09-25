@@ -43,19 +43,20 @@ public class MainActivity extends FragmentActivity implements LocationListener {
 		setContentView(R.layout.activity_main);
 
 		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-		// Check the status later ...
+		// Check the status, warn the user if the phone does not support our app
 		
 		_LocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-	}   
-
-	@Override
-	protected void onResume() {
-		super.onResume();
+		
 		setUpMapIfNeeded();
 		
 		Location location = getLastLocation();
 		LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 		_map.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
+	}   
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 	}
 
 	@Override
@@ -73,13 +74,38 @@ public class MainActivity extends FragmentActivity implements LocationListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
-		if (item.getItemId() == R.id.menu_maptype) {
-			// Start choose map type activity here
-			return true;
+		switch (item.getItemId())
+		{
+			case R.id.menuitem_maptype:
+			{
+				return true;
+			}
+			case R.id.action_satellite:
+			{
+				if (item.isChecked())
+				{
+					_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+					item.setChecked(false);
+					return true;
+				}
+				else 
+				{
+					_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+					item.setChecked(true);
+					return true;					
+				}
+			}
 		}
 		return super.onOptionsItemSelected(item);
 	}     
 
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) 
+	{
+		//getMenuInflater().inflate(R.menu.menu_maptype, menu);
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
 	private void setUpMapIfNeeded() {
 		// Do a null check to confirm that we have not already instantiated the map.
 		if (_map == null) {
