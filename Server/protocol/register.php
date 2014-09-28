@@ -24,8 +24,7 @@ class RegistrationRequest {
 	    "CREDIT_CARD_ZIPCODE" => "CreditCardZipcode=",	
 	    "NAME_ON_CARD" => "NameOnCard=",
 	    "SECURITY_CODE" => "SecurityCode=",
-	    "PHONE" => "Phone=",
-	    "TIMESTAMP" => "Timestamp"
+	    "PHONE" => "Phone="
     );
 
     private $response_code;
@@ -60,11 +59,10 @@ class RegistrationRequest {
         $this->processRegisterRequest();
     }
 
-    public function processRegisterRequest()
-    {
+    public function processRegisterRequest() {
         $email = mysql_real_escape_string(
 		    $this->searchQueryStringValue(
-			    self::$register_request_params["EMAIL"]));
+                self::$register_request_params["EMAIL"]));
 		$password = $this->searchQueryStringValue(
 		    self::$register_request_params["PASSWORD"]);
 		$role = mysql_real_escape_string($this->searchQueryStringValue(
@@ -120,13 +118,13 @@ class RegistrationRequest {
 		    $this->searchQueryStringValue(
 			    self::$register_request_params["TIMESTAMP"]));
 
-        if (empty($email) || strlen($email) == 0)
-        {
+        if (empty($email) || strlen($email) == 0) {
             $this->$response_code = BAD_REQUEST;
             return;
         }
 
 	    // TODO(zhj5825): DB operation to add the new user.
+	    // TODO(zhj5825): need to add a timestamp from the server.
 	    
         // TODO(zhj5825): Generate register response.
         $this->$response = header(
