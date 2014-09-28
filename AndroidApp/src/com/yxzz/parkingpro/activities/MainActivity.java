@@ -5,70 +5,188 @@
 package com.yxzz.parkingpro.activities;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.yxzz.parkingpro.R;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class MainActivity extends FragmentActivity {
-	
+public class MainActivity extends FragmentActivity implements LocationListener {
+
 	private GoogleMap _map;
+	private LocationManager _LocationManager;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+	// The minimum distance to change Updates in meters
+	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+	// The minimum time between updates in milliseconds
+	private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
 
-        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-        // Check the status later ...
-        
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpMapIfNeeded();
-    }
+	private static final LocationRequest REQUEST = LocationRequest.create()
+			.setInterval(5000)         // 5 seconds
+			.setFastestInterval(16)    // 16ms = 60fps
+			.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (_map == null) {
-            // Try to obtain the map from the SupportMapFragment.
-        	_map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (_map != null) {
-                setUpMap();
-            }
-        }
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
-    private void setUpMap() {
-    	_map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-    }
+		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+		// Check the status, warn the user if the phone does not support our app
+		
+		_LocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		
+		setUpMapIfNeeded();
+		
+		Location location = getLastLocation();
+		LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+		_map.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15));
+	}   
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+	}    
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId())
+		{
+			case R.id.menuitem_maptype:
+			{
+				return true;
+			}
+			case R.id.action_satellite:
+			{
+				if (item.isChecked())
+				{
+					_map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+					item.setChecked(false);
+					return true;
+				}
+				else 
+				{
+					_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+					item.setChecked(true);
+					return true;					
+				}
+			}
+		}
+		return super.onOptionsItemSelected(item);
+	}     
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) 
+	{
+		//getMenuInflater().inflate(R.menu.menu_maptype, menu);
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	private void setUpMapIfNeeded() {
+		// Do a null check to confirm that we have not already instantiated the map.
+		if (_map == null) {
+			// Try to obtain the map from the SupportMapFragment.
+			_map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+					.getMap();
+			// Check if we were successful in obtaining the map.
+			if (_map != null) {
+				setUpMap();
+				_map.setMyLocationEnabled(true);
+			}
+		}
+	}
+
+	private void setUpMap() {
+		//_map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+	}
+
+	public Location getLastLocation() {
+
+		Location location = null;
+		if (_LocationManager == null)
+			return null;
+
+		try {
+			// getting GPS status
+			boolean isGPSEnabled = _LocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+			// getting network status
+			boolean isNetworkEnabled = _LocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+			if (!isGPSEnabled && !isNetworkEnabled) {
+				// no network provider is enabled
+			} else {
+				//this.canGetLocation = true;
+				// First get location from Network Provider
+					if (isNetworkEnabled) {
+						_LocationManager.requestLocationUpdates(
+								LocationManager.NETWORK_PROVIDER,
+								MIN_TIME_BW_UPDATES,
+								MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+						Log.d("Network", "Network");
+						location = _LocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+					} 
+					else if (isGPSEnabled)
+					{
+						_LocationManager.requestLocationUpdates(
+								LocationManager.GPS_PROVIDER,
+								MIN_TIME_BW_UPDATES,
+								MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+						location = _LocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+					}
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return location;
+	}
+
+	@Override
+	public void onLocationChanged(Location arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderEnabled(String arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+		// TODO Auto-generated method stub
+
+	}
 }
