@@ -1,5 +1,5 @@
 <resources>
-
     <string name="app_name">ParkingPro</string>
-
+    <string name="mainsetting_maptype">Map Type</string>
+    <string name="maptypeitem_satellite">Satellite</string>
 </resources>
