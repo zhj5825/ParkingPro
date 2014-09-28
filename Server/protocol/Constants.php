@@ -1,8 +1,8 @@
 <?php
 
 class Constants {
-	const SUCCESS = http_response_code(200);
-	const BAD_REQUEST = http_response_code(400);
+	const SUCCESS = 200;
+	const BAD_REQUEST = 400;
 	public static $http_status_codes = array(
 	    100 => "Continue",
         101 => "Switching Protocols",
@@ -76,7 +76,7 @@ class Constants {
         510 => "Not Extended",
         511 => "Network Authentication Required",
         598 => "Network read timeout error",
-        599 => "Network connect timeout error")); 
+        599 => "Network connect timeout error"); 
 }
     
 ?>
