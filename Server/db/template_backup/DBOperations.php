@@ -1,5 +1,5 @@
 <?php
-
+/*
 include_once 'def_db.php';
 include_once 'DBConnection.php';
 
@@ -284,7 +284,7 @@ class DBOperations
 		return DBSUCCESSFUL;
 	}
 	
-	/*
+	
 	public function verifySession($account, $sessionid)
 	{
 		if (!$this->m_valid)
@@ -303,7 +303,7 @@ class DBOperations
 			return DBNOCONNECTION;
 		
 		return DBSUCCESSFUL;
-	}*/
+	}
 	
 	public function verifySession($sessionid)
 	{
@@ -864,4 +864,4 @@ class DBOperations
 	}
 }
 
-?>
+*/
