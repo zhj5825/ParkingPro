@@ -1,8 +1,10 @@
 <?php
 
-define("DBSUCCESSFUL", "1");
-define("DBNOTSUCCESSFUL", "2");
-define("DBNOCONNECTION", "3");
+define("DBSUCCESSFUL", "-1");
+define("DBNOTSUCCESSFUL", "-2");
+define("DBNOCONNECTION", "-3");
+define("USER_ACCOUNT_EXISTS", "-4");
+
 
 class DBConf {
 

@@ -1,6 +1,38 @@
 <?php
 
 include_once 'DBUtilOperations.php';
+include_once 'DBLogicOperations.php';
+echo "Starting test!..................";
 
-$util = new DBUtilOperations();
-$util->addAccount("xifang", "fangxi.cn@gmail.com", "123", 0, "xi", "fang", "alicante", "San Jose", "CA", "US", "95134", "00", "00", "credit_card_exp_year", "credit_card_address", "credit_card_city", "credit_card_state", "credit_card_country", "credit_card_zipcode", "name_on_card", "security_code", "4805594985");
+function generateRandomString($length = 10) {
+    return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+}
+
+$email = generateRandomString(10) . "@gmail.com";
+$password = generateRandomString(10);
+
+if (DBUtilOperations::checkUserAccountExistence($email) == true) {
+    echo "DBUtilOperations::checkUserAccountExistence failed on test of checking nonexisting user";
+}
+
+if (DBUtilOperations::addNewUserAccount($email, $password) == false) {
+    echo "DBUtilOperations::addNewUserAccount failed on test of adding nonexisting user";
+}
+
+if (DBUtilOperations::checkUserAccountExistence($email) == false) {
+    echo "DBUtilOperations::checkUserAccountExistence failed on test of checking existing user";
+}
+
+list($success, $messege) = DBLogicOperations::addNewUserAccount($email, $password);
+if ($success == true) {
+    echo "DBLogicOperations::addNewUserAccount failed on test of adding existing user";
+}
+
+$email = generateRandomString(4) . "@gmail.com";
+$password = generateRandomString(5);
+list($success, $messege) = DBLogicOperations::addNewUserAccount($email, $password);
+if ($success == false) {
+    echo "DBLogicOperations::addNewUserAccount failed on test of adding nonexisting user";
+}
+
+echo "Test finished!..................";

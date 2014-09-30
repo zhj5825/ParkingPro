@@ -32,9 +32,7 @@ class DBConnection {
     }
 
     public function execute_sql_query($sqlquery) {
-        if ($result = $this->connection->query($sqlquery)) {
-           return $result;
-        }
+        return $this->connection->query($sqlquery);
     }
 
 }

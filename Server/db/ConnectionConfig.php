@@ -10,7 +10,7 @@ class ConnectionConf {
         // account related
         "DB_USER" => "parkingpro",
         "DB_PASSWORD" => "parkingpro",
-        "DB_DATABASE" => "prod",
-        "DB_HOST" => "172.31.45.118"
+        "DB_DATABASE" => "dev",
+        "DB_HOST" => "54.68.153.166"
     );
 }
