@@ -35,4 +35,10 @@ if ($success == false) {
     echo "DBLogicOperations::addNewUserAccount failed on test of adding nonexisting user";
 }
 
+list($success, $messege) = DBLogicOperations::addCreditCard($email,  "123", "11" , "14", "180 Alicante Dr", "San Jose", "CA", "US", "12345", "SB" , "123");
+if ($success == false) {
+    echo "DBLogicOperations::addCreditCard failed: " . $messege;
+}  
+
+
 echo "Test finished!..................";

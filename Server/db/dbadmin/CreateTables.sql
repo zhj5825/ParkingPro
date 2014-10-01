@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `user_accounts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `UserName` varchar(255) NOT NULL default '', 
   `Email` varchar(255) default '', 
   `Password` varchar(256) NOT NULL default '',
@@ -24,4 +24,22 @@ CREATE TABLE IF NOT EXISTS `user_accounts` (
   PRIMARY KEY (`id`)
  ) 
  COMMENT='UserAccounts'
+ DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+
+CREATE TABLE IF NOT EXISTS `credit_cards` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `UserId` int(10) unsigned NOT NULL,
+  `CreditCardNum` varchar(20) NOT NULL,
+  `CreditCardExpMonth` char(2) NOT NULL,
+  `CreditCardExpYear` char(2) NOT NULL,
+  `CreditCardAddress` varchar(255) NOT NULL,
+  `CreditCardCity` varchar(255) NOT NULL,
+  `CreditCardState` varchar(255) NOT NULL,
+  `CreditCardCountry` varchar(255) NOT NULL,
+  `CreditCardZipcode` varchar(10) NOT NULL,
+  `CreditCardName` varchar(10) NOT NULL,
+  `CreditCardSecurityCode` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`)
+ ) 
+ COMMENT='CreditCards'
  DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;

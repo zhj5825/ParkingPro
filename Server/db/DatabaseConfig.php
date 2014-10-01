@@ -4,6 +4,8 @@ define("DBSUCCESSFUL", "-1");
 define("DBNOTSUCCESSFUL", "-2");
 define("DBNOCONNECTION", "-3");
 define("USER_ACCOUNT_EXISTS", "-4");
+define("USER_ACCOUNT_NOT_EXISTS", "-5");
+
 
 
 class DBConf {
