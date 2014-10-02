@@ -28,7 +28,7 @@ class DBConnectionManager {
     }
     
     /**
-     * Private ctor so nobody else can instance it
+     * Private constructor so nobody else can instantiate it
      *
      */
     private function __construct() {
