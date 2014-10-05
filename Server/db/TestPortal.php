@@ -2,6 +2,7 @@
 
 include_once 'DBUtilOperations.php';
 include_once 'DBLogicOperations.php';
+
 echo "Starting test!..................";
 
 function generateRandomString($length = 10) {
@@ -35,10 +36,39 @@ if ($success == false) {
     echo "DBLogicOperations::addNewUserAccount failed on test of adding nonexisting user";
 }
 
-list($success, $messege) = DBLogicOperations::addCreditCard($email,  "123", "11" , "14", "180 Alicante Dr", "San Jose", "CA", "US", "12345", "SB" , "123");
+list($success, $messege) = DBLogicOperations::addCreditCardByName($email,  "123", "11" , "14", "180 Alicante Dr", "San Jose", "CA", "US", "12345", "SB" , "123");
 if ($success == false) {
     echo "DBLogicOperations::addCreditCard failed: " . $messege;
-}  
+} 
+    
+list($success, $messege) = DBLogicOperations::addParkingLotByName($email,  "180 Alicante Dr", "San Jose", "CA", "US", "12345");
+if ($success == false) {
+    echo "DBLogicOperations::addParkingLotByName failed: " . $messege;
+} 
 
+list($success, $messege) = DBLogicOperations::setParkingLotAvailable(1,  "100", "1001", "1002");
+if ($success == false) {
+    echo "DBLogicOperations::setParkingLotAvailable failed: " . $messege;
+} 
+
+list($success, $messege) = DBLogicOperations::addParkingLotByName($email,  "180 Alicante Dr", "San Jose", "CA", "US", "12345");
+if ($success == false) {
+    echo "DBLogicOperations::addParkingLotByName failed: " . $messege;
+} 
+
+list($success, $messege) = DBLogicOperations::setParkingLotUnavailable(2,  "200", "2001", "2002");
+if ($success == false) {
+    echo "DBLogicOperations::SetParkingLotUnavailable failed: " . $messege;
+} 
+
+list($success, $messege) = DBLogicOperations::addParkingLotByName($email,  "180 Alicante Dr", "San Jose", "CA", "US", "12345");
+if ($success == false) {
+    echo "DBLogicOperations::addParkingLotByName failed: " . $messege;
+} 
+
+list($success, $messege) = DBLogicOperations::setParkingLotInactive(3);
+if ($success == false) {
+    echo "DBLogicOperations::setParkingLotInactive failed: " . $messege;
+} 
 
 echo "Test finished!..................";

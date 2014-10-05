@@ -1,3 +1,10 @@
+USE dev;
+
+DROP TABLE IF EXISTS user_accounts;
+DROP TABLE IF EXISTS credit_cards;
+DROP TABLE IF EXISTS parking;
+
+
 CREATE TABLE IF NOT EXISTS `user_accounts` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `UserName` varchar(255) NOT NULL default '', 
@@ -42,4 +49,24 @@ CREATE TABLE IF NOT EXISTS `credit_cards` (
   PRIMARY KEY (`ID`)
  ) 
  COMMENT='CreditCards'
+ DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+
+CREATE TABLE IF NOT EXISTS `parking` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `OwnerId` int(10) unsigned NOT NULL,
+
+  `Status` char(1) NOT NULL default 'I',
+  `ListedPrice` float default NULL,
+  `AvailableStartTime` INTEGER UNSIGNED default 0, # UNIX time
+  `AvailableEndTime` INTEGER UNSIGNED default 0, # UNIX time
+
+  `Address` varchar(255) default NULL, 
+  `City` varchar(255) default NULL, 
+  `State` varchar(255) default NULL, 
+  `Country` varchar(255) default NULL, 
+  `Zipcode` INTEGER UNSIGNED default NULL, 
+  `Rating` TINYINT default NULL,
+  PRIMARY KEY (`ID`)
+ ) 
+ COMMENT='Parking'
  DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;

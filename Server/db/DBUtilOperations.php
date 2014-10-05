@@ -71,6 +71,20 @@ class DBUtilOperations {
         return $result->fetch_row()[0] > 0;
     }
     
+    public static function checkUserIDExistence($user_id) {
+        $query = "SELECT count(*) from "
+                . DBConf::$tables["USER_ACCOUNTS"] 
+                . " WHERE ID='"
+                . $user_id . "'";
+        $connection = DBConnectionManager::getInstance()->getConnection();
+        $result = $connection->execute_sql_query($query);
+        if ($result == false) {
+            return DBNOTSUCCESSFUL;
+        }
+        
+        return $result->fetch_row()[0] > 0;
+    }
+    
     public static function getUserID($user_name) {
                 $query = "SELECT ID from "
                 . DBConf::$tables["USER_ACCOUNTS"]
@@ -113,5 +127,36 @@ class DBUtilOperations {
         $connection = DBConnectionManager::getInstance()->getConnection();
         return $connection->execute_sql_query($query);
     }
- 
+    
+    public static function addParkingLot($owner_id,  $address, $city, 
+            $state, $country, $zipcode) {
+        $query = "INSERT INTO "
+                . DBConf::$tables["PARKING"] . "(`OwnerId`, "
+                . "`Address`, `City`, `State`, `Country`, `Zipcode`"
+                . ") VALUES (";
+        $query = $query . "'" . $owner_id . "', ";
+        $query = $query . "'" . $address . "', ";
+        $query = $query . "'" . $city . "', ";
+        $query = $query . "'" . $state . "', ";
+        $query = $query . "'" . $country . "', ";
+        $query = $query . "'" . $zipcode . "')";
+       
+        $connection = DBConnectionManager::getInstance()->getConnection();
+        return $connection->execute_sql_query($query);
+    } 
+    
+    public static function updateParkingLotAvailability($id,  $status, $price, $available_start_time, $available_end_time) {
+        $query = "UPDATE "
+                . DBConf::$tables["PARKING"] . " SET ";
+        $query = $query . "Status='" . $status . "', ";
+        $query = $query . "ListedPrice='" . $price . "', ";
+        $query = $query . "AvailableStartTime='" . $available_start_time . "', ";
+        $query = $query . "AvailableEndTime='" . $available_end_time . "' ";
+
+        $query = $query . "Where ID='" . $id . "'";
+        $connection = DBConnectionManager::getInstance()->getConnection();
+        return $connection->execute_sql_query($query);
+    }
+    
 }
+ 

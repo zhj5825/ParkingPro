@@ -17,9 +17,7 @@ class DBConnection {
                 ConnectionConf::$ConnLogin["DB_PASSWORD"], 
                 ConnectionConf::$ConnLogin["DB_DATABASE"]);
         if ($this->connection->connect_errno) {
-            printf("Connect failed: %s with error code:%d\n", 
-                    $this->connection->connect_error, 
-                    $this->connection->connect_errno);
+            printf("Connect failed: %s\n", $this->connection->connect_error);
             exit();
         }
     }
