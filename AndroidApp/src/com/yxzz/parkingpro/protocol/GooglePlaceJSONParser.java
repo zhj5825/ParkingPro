@@ -1,5 +1,7 @@
 package com.yxzz.parkingpro.protocol;
 
+// got this from http://wptrafficanalyzer.in/blog/adding-google-places-autocomplete-api-as-custom-suggestions-in-android-search-dialog/
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
