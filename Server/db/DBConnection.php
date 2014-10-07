@@ -1,36 +1,38 @@
 <?php
-class DBConnection
-{
-	public $m_con;
-	
-	public function __construct()
-	{
-		$this->m_con = false;
-	}
-	
-	public function __destruct()
-	{
-		if ($this->m_con)
-		{
-			//mysql_close($this->m_con);
-			//$this->m_con = false;
-			//debug_print_backtrace();
-		}
-	}
-	
-	public function connect()
-	{
-		$this->m_con = mysql_connect("localhost","root","");
-		
-		if (!$this->m_con)
-		{
-			//die('Could not connect: ' . mysql_error());
-		}
-		
-		if (!mysql_select_db("mpaymentdb", $this->m_con))
-		{
-			//die('Could not find db: ' . mysql_error());
-		}
-	}
+
+require ("ConnectionConfig.php");
+
+/**
+ * DB connection class.
+ * TODO(xifang): Add logic for retry when connection is down.
+ *
+ */
+class DBConnection {
+
+    public $connection;
+    public function __construct() {
+        $this->connection = new mysqli(
+                ConnectionConf::$ConnLogin["DB_HOST"],
+                ConnectionConf::$ConnLogin["DB_USER"], 
+                ConnectionConf::$ConnLogin["DB_PASSWORD"], 
+                ConnectionConf::$ConnLogin["DB_DATABASE"]);
+        if ($this->connection->connect_errno) {
+            printf("Connect failed: %s\n", $this->connection->connect_error);
+            exit();
+        }
+    }
+
+    public function __destruct() {
+        $this->close_db();
+    }
+
+
+    public function close_db() {
+        $this->connection->close();
+    }
+
+    public function execute_sql_query($sqlquery) {
+        return $this->connection->query($sqlquery);
+    }
+
 }
-?>
