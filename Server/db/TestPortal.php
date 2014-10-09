@@ -2,7 +2,7 @@
 
 include_once 'DBUtilOperations.php';
 include_once 'DBLogicOperations.php';
-
+   
 echo "Starting test!..................";
 
 function generateRandomString($length = 10) {
