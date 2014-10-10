@@ -63,4 +63,52 @@ class DBConnection {
                 . $values . ")";
         return $this->execute_sql_query($query);
     } 
+    
+    public function update_info($table_name, $columns, $conditions) {
+        $info = "";
+        foreach ($columns as $key => $value) {
+            $info = $info . $key . "='" . $value . "',";
+        }
+        if (strlen($info) > 0) {
+            $info = substr($info, 0, -1);
+        }
+        $condition = "";
+        foreach ($conditions as $key => $value) {
+            $condition = $condition . $key . "='" . $value . "',";
+        }
+        if (strlen($condition) > 0) {
+            $condition = substr($condition, 0, -1);
+        }
+        $query = "UPDATE "
+                . $table_name . " SET " . $info;
+        if (strlen($condition) > 0) {
+            $query = $query . " Where " . $condition;
+        }
+        $connection = DBConnectionManager::getInstance()->getConnection();
+        return $connection->execute_sql_query($query);
+    }
+    
+    public function select_info($table_name, $columns, $conditions) {
+        $info = "";
+        foreach ($columns as $column) {
+            $info = $info . $column . ",";
+        }
+        if (strlen($info) > 0) {
+            $info = substr($info, 0, -1);
+        }
+        $condition = "";
+        foreach ($conditions as $key => $value) {
+            $condition = $condition . $key . "='" . $value . "',";
+        }
+        if (strlen($condition) > 0) {
+            $condition = substr($condition, 0, -1);
+        }
+
+        $query = "SELECT " . $info . " from " . $table_name;
+        if (strlen($condition) > 0) {
+            $query = $query . " Where " . $condition;
+        }
+        $connection = DBConnectionManager::getInstance()->getConnection();
+        return $connection->execute_sql_query($query);
+    }     
 }
