@@ -47,15 +47,15 @@ class DBConnection {
         $keys = "";
         $values = "";
         foreach($columns as $key => $value) {
-            $keys = $keys . "`" . $key . "`,";
-            $values = $values . "'" . $value . "',";
+            $keys = $keys . $key . ", ";
+            $values = $values . "'" . $value . "', ";
             
         }
         if (strlen($keys) > 0) {
-            $keys = substr($keys, 0, -1);
+            $keys = substr($keys, 0, -2);
         }
         if (strlen($values) > 0) {
-            $values = substr($values, 0, -1);
+            $values = substr($values, 0, -2);
         }
         $query = "INSERT INTO "
                 . $table_name . "("
@@ -67,17 +67,17 @@ class DBConnection {
     public function update_info($table_name, $columns, $conditions) {
         $info = "";
         foreach ($columns as $key => $value) {
-            $info = $info . $key . "='" . $value . "',";
+            $info = $info . $key . "='" . $value . "', ";
         }
         if (strlen($info) > 0) {
-            $info = substr($info, 0, -1);
+            $info = substr($info, 0, -2);
         }
         $condition = "";
         foreach ($conditions as $key => $value) {
-            $condition = $condition . $key . "='" . $value . "',";
+            $condition = $condition . $key . "='" . $value . "', ";
         }
         if (strlen($condition) > 0) {
-            $condition = substr($condition, 0, -1);
+            $condition = substr($condition, 0, -2);
         }
         $query = "UPDATE "
                 . $table_name . " SET " . $info;
@@ -91,17 +91,17 @@ class DBConnection {
     public function select_info($table_name, $columns, $conditions) {
         $info = "";
         foreach ($columns as $column) {
-            $info = $info . $column . ",";
+            $info = $info . $column . ", ";
         }
         if (strlen($info) > 0) {
-            $info = substr($info, 0, -1);
+            $info = substr($info, 0, -2);
         }
         $condition = "";
         foreach ($conditions as $key => $value) {
-            $condition = $condition . $key . "='" . $value . "',";
+            $condition = $condition . $key . "='" . $value . "', ";
         }
         if (strlen($condition) > 0) {
-            $condition = substr($condition, 0, -1);
+            $condition = substr($condition, 0, -2);
         }
 
         $query = "SELECT " . $info . " from " . $table_name;
