@@ -60,7 +60,7 @@ class RegistrationRequest {
 	public function verifyHttpPostRequest($data) {
 	    // Check format, protocol version, method type
 	    if (strlen($data) == 0) {
-            $this->$response_code = Constants::SUCCESS;
+            $this->$response_code = Constants::BAD_REQUEST;
             return;
         }
 
@@ -79,24 +79,22 @@ class RegistrationRequest {
             return;
         }
 
-	    // TODO(zhj5825): DB operation to add the new user.
         list($result, $status) = DBLogicOperations::addNewUserAccount(
             $email, $password);
         if (!$result) {
        	    $this->$response_code = Constants::BAD_REQUEST;
         }
-	    
-        // TODO(zhj5825): Generate register response.
+
         $this->$response = header(
             "HTTP/1.0 " . strval($response_code) . " " .
         	Constants::$http_status_codes[$response_code]. " " .
   	        "content-type:application/x-thrift" . " " .
   	        "content-length:");
-        exit($response);
+        return $this->response;
     }
 }
 
 $data = file_get_contents("php://input");
-$registration_request = new RegistrationRequest($data);
+$registration_response = new RegistrationRequest($data);
 
 ?>
