@@ -114,7 +114,7 @@ class DBLogicOperations {
    
     // Updates the parking lot availablity and the available time.
     public static function setParkingLotAvailable($id,  $price, $available_start_time, $available_end_time) {
-        $result = DBUtilOperations::updateParkingLotAvailability($id, 'A', $price, $available_start_time, $available_end_time);
+        $result = DBUtilOperations::updateParkingLotAvailability($id, TableEnum::$parking_status["AVAILABLE"], $price, $available_start_time, $available_end_time);
         if($result == false) {
             return array(false, DBNOTSUCCESSFUL);
         } else {
@@ -124,7 +124,7 @@ class DBLogicOperations {
    
     // Updates the parking lot unavailablity currently, but set the available time afterwards and the correponsding price.
     public static function setParkingLotUnavailable($id, $price, $available_start_time, $available_end_time) {
-        $result = DBUtilOperations::updateParkingLotAvailability($id, 'U', $price, $available_start_time, $available_end_time);
+        $result = DBUtilOperations::updateParkingLotAvailability($id, TableEnum::$parking_status["OCCUPIED"], $price, $available_start_time, $available_end_time);
         if($result == false) {
             return array(false, DBNOTSUCCESSFUL);
         } else {
@@ -134,7 +134,7 @@ class DBLogicOperations {
     
     // Inactivates the parking lot.
     public static function setParkingLotInactive($id) {
-        $result = DBUtilOperations::updateParkingLotAvailability($id, 'I', NULL, NULL, NULL);
+        $result = DBUtilOperations::updateParkingLotAvailability($id, TableEnum::$parking_status["INACTIVE"], NULL, NULL, NULL);
         if($result == false) {
             return array(false, DBNOTSUCCESSFUL);
         } else {

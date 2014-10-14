@@ -25,6 +25,14 @@ class DBConf {
         "PROD" => "prd",
         "STAGING" => "staging",
     );
+}
 
+class TableEnum {
+    public static $parking_status = array(
+        // account related
+        "INACTIVE" => "I",
+        "OCCUPIED" => "O",
+        "AVAILABLE" => "A",
+        );
 }
 
