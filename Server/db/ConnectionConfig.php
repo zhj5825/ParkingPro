@@ -1,11 +1,11 @@
 <?php
+include_once 'DatabaseConfig.php';
 
 /*
  * DB configuration.
  */
 
 class ConnectionConf {
-
     public static $ConnLogin = array(
         // account related
         "DB_USER" => "parkingpro",

@@ -111,20 +111,11 @@ class DBLogicOperations {
             return array(true, DBSUCCESSFUL);
         } 
     }
-   
-    // Updates the parking lot availablity and the available time.
-    public static function setParkingLotAvailable($id,  $price, $available_start_time, $available_end_time) {
-        $result = DBUtilOperations::updateParkingLotAvailability($id, TableEnum::$parking_status["AVAILABLE"], $price, $available_start_time, $available_end_time);
-        if($result == false) {
-            return array(false, DBNOTSUCCESSFUL);
-        } else {
-            return array(true, DBSUCCESSFUL);
-        } 
-    } 
-   
-    // Updates the parking lot unavailablity currently, but set the available time afterwards and the correponsding price.
-    public static function setParkingLotUnavailable($id, $price, $available_start_time, $available_end_time) {
-        $result = DBUtilOperations::updateParkingLotAvailability($id, TableEnum::$parking_status["OCCUPIED"], $price, $available_start_time, $available_end_time);
+      
+    // Updates the parking lot active currently, and set the available time afterwards and the correponsding price.
+    public static function setParkingLotActive($id, $price, $available_start_time, $available_end_time) {
+        $result = DBUtilOperations::updateParkingLotAvailability(
+                $id, TableEnum::$parking_status["ACTIVE"], $price, $available_start_time, $available_end_time);
         if($result == false) {
             return array(false, DBNOTSUCCESSFUL);
         } else {
@@ -134,12 +125,24 @@ class DBLogicOperations {
     
     // Inactivates the parking lot.
     public static function setParkingLotInactive($id) {
-        $result = DBUtilOperations::updateParkingLotAvailability($id, TableEnum::$parking_status["INACTIVE"], NULL, NULL, NULL);
+        $result = DBUtilOperations::updateParkingLotAvailability(
+                $id, TableEnum::$parking_status["INACTIVE"], NULL, NULL, NULL);
         if($result == false) {
             return array(false, DBNOTSUCCESSFUL);
         } else {
             return array(true, DBSUCCESSFUL);
         } 
     } 
+    
+    public static function selectParkingLotsByZipcode($zipcode) {
+        return DBUtilOperations::selectParkingLotsByZipcode($zipcode);
+    }
+    
+    public static function selectParkingLotsByAddress($address, $city, $state, $country) {
+        return DBUtilOperations::selectParkingLotsByAddress(
+                $address, $city, $state, $country);
+    }
+
+
 }
 

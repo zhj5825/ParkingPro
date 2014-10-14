@@ -135,5 +135,56 @@ class DBUtilOperations {
         return $connection->update_info(
                 DBConf::$tables["PARKING"], $columns, $conditions);
     }
-
+    
+    public static function selectParkingLotsByZipcode($zipcode) {
+        $columns = array(
+            'ID',
+            'OwnerID',
+            'ListedPrice',
+            'AvailableStartTime',
+            'AvailableEndTime',
+            'Address',
+            'City',
+            'State',
+            'Country',
+            'Rating'
+        );
+        $conditions = array(
+            'Zipcode' => $zipcode,
+            'Status' => TableEnum::$parking_status["ACTIVE"]
+        );
+        $connection = DBConnectionManager::getInstance()->getConnection();
+        $result = $connection->select_info(
+                DBConf::$tables["PARKING"], $columns, $conditions);
+       if ($result == false) {
+            return array(false, DBNOTSUCCESSFUL);
+        }    
+        return array(true, $result);
+    }
+    
+    public static function selectParkingLotsByAddress($address, $city, $state, $country) {
+        $columns = array(
+            'ID',
+            'OwnerID',
+            'ListedPrice',
+            'AvailableStartTime',
+            'AvailableEndTime',
+            'Rating'
+        );
+        $conditions = array(
+            'Address' => $address,
+            'City' => $city,
+            'State' => $state,
+            'Country' => $country,
+            'Status' => TableEnum::$parking_status["ACTIVE"]
+        );
+        $connection = DBConnectionManager::getInstance()->getConnection();
+        $result = $connection->select_info(
+                DBConf::$tables["PARKING"], $columns, $conditions);
+        
+        if ($result == false) {
+            return array(false, DBNOTSUCCESSFUL);
+        }    
+        return array(true, $result);
+    }
 }

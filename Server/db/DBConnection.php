@@ -74,10 +74,10 @@ class DBConnection {
         }
         $condition = "";
         foreach ($conditions as $key => $value) {
-            $condition = $condition . $key . "='" . $value . "', ";
+            $condition = $condition . $key . "='" . $value . "' AND ";
         }
         if (strlen($condition) > 0) {
-            $condition = substr($condition, 0, -2);
+            $condition = substr($condition, 0, -5);
         }
         $query = "UPDATE "
                 . $table_name . " SET " . $info;
@@ -98,10 +98,10 @@ class DBConnection {
         }
         $condition = "";
         foreach ($conditions as $key => $value) {
-            $condition = $condition . $key . "='" . $value . "', ";
+            $condition = $condition . $key . "='" . $value . "' AND ";
         }
         if (strlen($condition) > 0) {
-            $condition = substr($condition, 0, -2);
+            $condition = substr($condition, 0, -5);
         }
 
         $query = "SELECT " . $info . " from " . $table_name;

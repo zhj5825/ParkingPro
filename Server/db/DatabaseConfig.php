@@ -20,19 +20,13 @@ class DBConf {
         "CREDIT_CARDS" => "credit_cards",
         "BANK_ACCOUNTS" => "bank_accounts"
     );
-    
-    public static $databases = array(
-        "PROD" => "prd",
-        "STAGING" => "staging",
-    );
 }
 
 class TableEnum {
     public static $parking_status = array(
         // account related
         "INACTIVE" => "I",
-        "OCCUPIED" => "O",
-        "AVAILABLE" => "A",
+        "ACTIVE" => "A"
         );
 }
 
