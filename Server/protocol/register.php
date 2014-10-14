@@ -23,30 +23,6 @@ use Thrift\Exception\TException;
 use Thrift\Serializer\TBinarySerializer;
 
 class RegistrationRequest {
-    public static $register_request_params = array(
-	    "EMAIL" => "Email=",
-	    "PASSWORD" => "Password=",
-	    "ROLE" => "Role=",
-	    "FIRST_NAME" => "FirstName=",
-	    "LAST_NAME" => "LastName=",
-	    "HOME_ADDRESS" => "HomeAddress=",
-	    "HOME_CITY" => "HomeCity=",
-	    "HOME_STATE" => "HomeState=",
-	    "HOME_COUNTRY" => "HomeCountry=",
-	    "HOME_ZIPCODE" => "HomeZipcode=",
-	    "CREDIT_CARD_NUMBER" => "CreditCardNum=",
-	    "CREDIT_CARD_EXP_MONTH" => "CreditCardExpMonth=",
-	    "CREDIT_CARD_EXP_YEAR" => "CreditCardExpYear=",
-	    "CREDIT_CARD_ADDRESS" => "CreditCardAddress=",
-	    "CREDIT_CARD_CITY" => "CreditCardCity=",
-	    "CREDIT_CARD_STATE" => "CreditCardState=",
-	    "CREDIT_CARD_COUNTRY" => "CreditCardCountry=",
-	    "CREDIT_CARD_ZIPCODE" => "CreditCardZipcode=",	
-	    "NAME_ON_CARD" => "NameOnCard=",
-	    "SECURITY_CODE" => "SecurityCode=",
-	    "PHONE" => "Phone="
-    );
-
     private $response_code;
     private $response;
     private $m_lines;
