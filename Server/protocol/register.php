@@ -71,6 +71,7 @@ class RegistrationRequest {
 }
 
 $data = file_get_contents("php://input");
-$registration_response = new RegistrationRequest($data);
+echo 'data = ' . $data;
+$registration_response = $data; //new RegistrationRequest($data);
 
 ?>
