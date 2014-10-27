@@ -30,7 +30,7 @@ import android.util.Log;
  
 public class GooglePlaceProvider extends ContentProvider {
  
-    public static final String AUTHORITY = "in.wptrafficanalyzer.locationsearchdialogv2.PlaceProvider";
+    public static final String AUTHORITY = "com.yxzz.parkingpro.providers.GooglePlaceProvider";
  
     public static final Uri SEARCH_URI = Uri.parse("content://"+AUTHORITY+"/search");
  
@@ -41,7 +41,7 @@ public class GooglePlaceProvider extends ContentProvider {
     private static final int DETAILS = 3;
  
     // Obtain browser key from https://code.google.com/apis/console
-    String mKey = "key=AIzaSyBE8i23tJvpKqW-TXHn-tmtAFwrqvI9Cs8";
+    String mKey = "AIzaSyBE8i23tJvpKqW-TXHn-tmtAFwrqvI9Cs8";
  
     // Defines a set of uris allowed with this content provider
     private static final UriMatcher mUriMatcher = buildUriMatcher();
@@ -280,7 +280,7 @@ public class GooglePlaceProvider extends ContentProvider {
         String types = "types=geocode";
  
         // Building the parameters to the web service
-        String parameters = qry+"&"+types+"&"+sensor+"&"+mKey;
+        String parameters = qry+"&"+types+"&"+sensor+"&"+"key="+mKey;
  
         // Output format
         String output = "json";

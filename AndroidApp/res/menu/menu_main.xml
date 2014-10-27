@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
     <item
         android:id="@+id/menuitem_maptype"
         android:showAsAction="never"
@@ -14,4 +13,9 @@
             </group>
         </menu>
     </item>
+    <item
+       android:id="@+id/menuitem_search"
+       android:actionViewClass="android.widget.SearchView"
+       android:showAsAction="always"
+       android:title="Search" />
 </menu>

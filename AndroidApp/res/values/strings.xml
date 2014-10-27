@@ -2,4 +2,6 @@
     <string name="app_name">ParkingPro</string>
     <string name="mainsetting_maptype">Map Type</string>
     <string name="maptypeitem_satellite">Satellite</string>
+    <string name="search_hint">Search a location</string>
+    <string name="search_settings">Search Setting</string>
 </resources>
