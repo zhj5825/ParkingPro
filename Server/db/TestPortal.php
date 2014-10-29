@@ -46,29 +46,32 @@ if ($success == false) {
     echo "DBLogicOperations::addParkingLotByName failed: " . $messege;
 } 
 
-list($success, $messege) = DBLogicOperations::setParkingLotAvailable(1,  "100", "1001", "1002");
+list($success, $messege) = DBLogicOperations::setParkingLotActive(1,  "100", "1001", "1002");
 if ($success == false) {
-    echo "DBLogicOperations::setParkingLotAvailable failed: " . $messege;
+    echo "DBLogicOperations::setParkingLotActive failed: " . $messege;
 } 
 
-list($success, $messege) = DBLogicOperations::addParkingLotByName($email,  "180 Alicante Dr", "San Jose", "CA", "US", "12345");
-if ($success == false) {
-    echo "DBLogicOperations::addParkingLotByName failed: " . $messege;
-} 
-
-list($success, $messege) = DBLogicOperations::setParkingLotUnavailable(2,  "200", "2001", "2002");
-if ($success == false) {
-    echo "DBLogicOperations::SetParkingLotUnavailable failed: " . $messege;
-} 
-
-list($success, $messege) = DBLogicOperations::addParkingLotByName($email,  "180 Alicante Dr", "San Jose", "CA", "US", "12345");
+list($success, $messege) = DBLogicOperations::addParkingLotByName($email,  "181 Alicante Dr", "San Jose", "CA", "US", "12345");
 if ($success == false) {
     echo "DBLogicOperations::addParkingLotByName failed: " . $messege;
 } 
 
-list($success, $messege) = DBLogicOperations::setParkingLotInactive(3);
+list($success, $messege) = DBLogicOperations::setParkingLotInactive(2);
 if ($success == false) {
     echo "DBLogicOperations::setParkingLotInactive failed: " . $messege;
 } 
+
+list($success, $messege) = DBLogicOperations::selectParkingLotsByZipcode("12345");
+if ($success == false ) {
+    echo "DBLogicOperations::selectParkingLotsByZipcode failed: " . $messege;
+} else if ($messege->num_rows == 0 ) {
+  echo "DBLogicOperations::selectParkingLotsByZipcode failed: " . "zero parking lot is found";
+}
+list($success, $messege) = DBLogicOperations::selectParkingLotsByAddress("180 Alicante Dr", "San Jose", "CA", "US");
+if ($success == false ) {
+    echo "DBLogicOperations::selectParkingLotsByAddress failed: " . $messege;
+} else if ($messege->num_rows == 0 ) {
+    echo "DBLogicOperations::selectParkingLotsByAddress failed: " . "zero parking lot is found";
+}
 
 echo "Test finished!..................";
