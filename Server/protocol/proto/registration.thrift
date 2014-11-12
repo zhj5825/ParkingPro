@@ -13,5 +13,5 @@ struct RegistrationResponse {
 }
 
 service Registration {
-  RegistrationResponse registerNewUser(1:RegistrationRequest request),
+  RegistrationResponse addNewUserAccount(1:RegistrationRequest request),
 }
