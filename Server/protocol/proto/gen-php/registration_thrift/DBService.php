@@ -239,4 +239,51 @@ class DBService_addNewUserAccount_result {
 
 }
 
+class DBServiceProcessor {
+  protected $handler_ = null;
+  public function __construct($handler) {
+    $this->handler_ = $handler;
+  }
+
+  public function process($input, $output) {
+    $rseqid = 0;
+    $fname = null;
+    $mtype = 0;
+
+    $input->readMessageBegin($fname, $mtype, $rseqid);
+    $methodname = 'process_'.$fname;
+    if (!method_exists($this, $methodname)) {
+      $input->skip(TType::STRUCT);
+      $input->readMessageEnd();
+      $x = new TApplicationException('Function '.$fname.' not implemented.', TApplicationException::UNKNOWN_METHOD);
+      $output->writeMessageBegin($fname, TMessageType::EXCEPTION, $rseqid);
+      $x->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+      return;
+    }
+    $this->$methodname($rseqid, $input, $output);
+    return true;
+  }
+
+  protected function process_addNewUserAccount($seqid, $input, $output) {
+    $args = new \registration_thrift\DBService_addNewUserAccount_args();
+    $args->read($input);
+    $input->readMessageEnd();
+    $result = new \registration_thrift\DBService_addNewUserAccount_result();
+    $result->success = $this->handler_->addNewUserAccount($args->request);
+    $bin_accel = ($output instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'addNewUserAccount', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('addNewUserAccount', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
+}
 

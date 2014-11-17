@@ -35,7 +35,7 @@ class RegistrationRequest {
 	    
 	    try {
 		    if (array_search('--http', $argv)) {
-		    	$socket = new THttpClient('localhost', 8080, '../db/DBLogicOperations.php');
+		    	$socket = new THttpClient('localhost', 8080, '../db/DBServiceServer.php');
 		    } else {
 		        $socket = new TSocket('localhost', 9090);
 		    }
