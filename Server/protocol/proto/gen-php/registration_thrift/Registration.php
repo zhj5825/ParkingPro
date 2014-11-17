@@ -16,7 +16,7 @@ use Thrift\Exception\TApplicationException;
 
 
 interface RegistrationIf {
-  public function registerNewUser(\registration_thrift\RegistrationRequest $request);
+  public function addNewUserAccount(\registration_thrift\RegistrationRequest $request);
 }
 
 class RegistrationClient implements \registration_thrift\RegistrationIf {
@@ -30,34 +30,34 @@ class RegistrationClient implements \registration_thrift\RegistrationIf {
     $this->output_ = $output ? $output : $input;
   }
 
-  public function registerNewUser(\registration_thrift\RegistrationRequest $request)
+  public function addNewUserAccount(\registration_thrift\RegistrationRequest $request)
   {
-    $this->send_registerNewUser($request);
-    return $this->recv_registerNewUser();
+    $this->send_addNewUserAccount($request);
+    return $this->recv_addNewUserAccount();
   }
 
-  public function send_registerNewUser(\registration_thrift\RegistrationRequest $request)
+  public function send_addNewUserAccount(\registration_thrift\RegistrationRequest $request)
   {
-    $args = new \registration_thrift\Registration_registerNewUser_args();
+    $args = new \registration_thrift\Registration_addNewUserAccount_args();
     $args->request = $request;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
-      thrift_protocol_write_binary($this->output_, 'registerNewUser', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+      thrift_protocol_write_binary($this->output_, 'addNewUserAccount', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
     }
     else
     {
-      $this->output_->writeMessageBegin('registerNewUser', TMessageType::CALL, $this->seqid_);
+      $this->output_->writeMessageBegin('addNewUserAccount', TMessageType::CALL, $this->seqid_);
       $args->write($this->output_);
       $this->output_->writeMessageEnd();
       $this->output_->getTransport()->flush();
     }
   }
 
-  public function recv_registerNewUser()
+  public function recv_addNewUserAccount()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\registration_thrift\Registration_registerNewUser_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\registration_thrift\Registration_addNewUserAccount_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -71,21 +71,21 @@ class RegistrationClient implements \registration_thrift\RegistrationIf {
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \registration_thrift\Registration_registerNewUser_result();
+      $result = new \registration_thrift\Registration_addNewUserAccount_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
     if ($result->success !== null) {
       return $result->success;
     }
-    throw new \Exception("registerNewUser failed: unknown result");
+    throw new \Exception("addNewUserAccount failed: unknown result");
   }
 
 }
 
 // HELPER FUNCTIONS AND STRUCTURES
 
-class Registration_registerNewUser_args {
+class Registration_addNewUserAccount_args {
   static $_TSPEC;
 
   public $request = null;
@@ -108,7 +108,7 @@ class Registration_registerNewUser_args {
   }
 
   public function getName() {
-    return 'Registration_registerNewUser_args';
+    return 'Registration_addNewUserAccount_args';
   }
 
   public function read($input)
@@ -146,7 +146,7 @@ class Registration_registerNewUser_args {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('Registration_registerNewUser_args');
+    $xfer += $output->writeStructBegin('Registration_addNewUserAccount_args');
     if ($this->request !== null) {
       if (!is_object($this->request)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
@@ -162,7 +162,7 @@ class Registration_registerNewUser_args {
 
 }
 
-class Registration_registerNewUser_result {
+class Registration_addNewUserAccount_result {
   static $_TSPEC;
 
   public $success = null;
@@ -185,7 +185,7 @@ class Registration_registerNewUser_result {
   }
 
   public function getName() {
-    return 'Registration_registerNewUser_result';
+    return 'Registration_addNewUserAccount_result';
   }
 
   public function read($input)
@@ -223,7 +223,7 @@ class Registration_registerNewUser_result {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('Registration_registerNewUser_result');
+    $xfer += $output->writeStructBegin('Registration_addNewUserAccount_result');
     if ($this->success !== null) {
       if (!is_object($this->success)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
