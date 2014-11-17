@@ -11,3 +11,7 @@ struct RegistrationRequest {
 struct RegistrationResponse {
   1: optional string response_message,
 }
+
+service Registration {
+  RegistrationResponse addNewUserAccount(1:RegistrationRequest request),
+}
