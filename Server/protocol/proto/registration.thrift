@@ -12,6 +12,6 @@ struct RegistrationResponse {
   1: optional string response_message,
 }
 
-service Registration {
+service DBService {
   RegistrationResponse addNewUserAccount(1:RegistrationRequest request),
 }
