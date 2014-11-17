@@ -26,11 +26,26 @@ class RegistrationRequest {
     private $response_code;
     private $response;
     private $m_lines;
+    private $db_client;
 
     public function __construct($data) {
   	    $this->$response = array();
 	    $this->$response_code = http_response_code(200);
 	    $this->verifyHttpPostRequest($data);
+	    
+	    try {
+		    if (array_search('--http', $argv)) {
+		    	$socket = new THttpClient('localhost', 8080, '../db/DBLogicOperations.php');
+		    } else {
+		        $socket = new TSocket('localhost', 9090);
+		    }
+		    $transport = new TBufferedTransport($socket, 1024, 1024);
+		    $protocol = new TBinaryProtocol($transport);
+		    $this->$db_client = new \registration_thrift\DBServiceClient($protocol);
+		    $transport->open();
+	    } catch (TException $tx) {
+	    	print 'TException: '.$tx->getMessage()."\n";
+	    }
     }
 
 	public function verifyHttpPostRequest($data) {
@@ -55,7 +70,7 @@ class RegistrationRequest {
             return;
         }
 
-        list($result, $status) = DBLogicOperations::addNewUserAccount(
+        list($result, $status) = $this->$db_client->addNewUserAccount(
             $email, $password);
         if (!$result) {
        	    $this->$response_code = Constants::BAD_REQUEST;

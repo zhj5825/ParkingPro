@@ -1,8 +1,9 @@
 <?php
+use registration_thrift;
 include_once 'DatabaseConfig.php';
 include_once 'DBUtilOperations.php';
 
-class DBLogicOperations {
+class DBLogicOperations implements \registration_thrift\DBServiceIf {
 
     // constructor
     public function __construct() {        
@@ -13,7 +14,7 @@ class DBLogicOperations {
     
     // If a new user account is added, returns a tuple of (true, DBSUCCESSFUL);
     // otherwise, returns a tuple of (false, ERROR_CODE). 
-    public static function addNewUserAccount($email, $password) {
+    public function addNewUserAccount($email, $password) {
         $account_exists = DBUtilOperations::checkUserAccountExistence($email);
         if($account_exists == DBNOTSUCCESSFUL) {
             return array(false, DBNOTSUCCESSFUL);
